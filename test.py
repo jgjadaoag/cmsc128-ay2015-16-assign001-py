@@ -1,6 +1,24 @@
 import re
 
-def numToWords(number, accumulator = ""):
+def numToWords(number):
+    """ 
+        Accepts a whole number from zero (0) to 1 million (1000000; without 
+        commas for example: 1,000,000) and prints on screen the number in word form
+    """
+    print(numToWordsHelper(number))
+
+def numToWordsHelper(number, accumulator = ""):
+    """ 
+        Accepts a number and returns the number in word form
+
+        Args:
+            number (int): The number to convert.
+            accumulator (string): Variable used by the function to 
+                accumulate the result.
+
+        Returns:
+            string: The converted number.
+    """
     if number == 0:
         return "zero "
     elif number < 0:
@@ -45,6 +63,15 @@ def numToWords(number, accumulator = ""):
         return accumulator + "one "
 
 def getNumPrefix(number):
+    """
+        Returns the prefix from numbers eg eigh in eigh(ty) or eigh(teen).
+        
+        Args:
+            number (int): The number to get the prefix from.
+
+        Returns:
+            string: The prefix or None if invalid.
+    """
     if number == 9:
         return "nine"
     elif number == 8:
@@ -59,9 +86,20 @@ def getNumPrefix(number):
         return "four"
     elif number == 3:
         return "thir"
-    return ""
+    return
 
 def wordsToNum(numberWord):
+    """
+        Accepts a number in word form (from zero to 1 million) and 
+        returns it in numerical form Input must be in lowercase
+
+        Args:
+            numberWord (string): The number in word form.
+
+        Returns:
+            int: The converted number or None if the string has
+                words
+    """
     numberWord = numberWord.lower()
     words = re.split("\W+", numberWord); 
     holder = 0
@@ -134,6 +172,15 @@ def wordsToNum(numberWord):
     return number+holder
 
 def getNumPrefixValue(word):
+    """
+        Accepts a prefix and returns the value.
+
+        Args:
+            word (string): The prefix to convert
+
+        Returns:
+            int: The value of the prefix.
+    """
     if word == "nine":
         return 9
     elif word == "eigh":
@@ -150,18 +197,41 @@ def getNumPrefixValue(word):
         return 3
 
 def wordsToCurrency(words, currency):
+    """
+        Accepts two arguments: the first argument is the 
+        number in word form (from zero to 1 million) and
+        the second argument is any of the following: JPY,
+        PHP, USD. The function returns the number in words 
+        to its numerical form with a prefix of the currency
+
+        Args:
+            words (string): The number to use.
+            currency (string): The currency to use.
+
+        Returns:
+            string: The number with its currency.
+    """
+    if not re.match('JPY|PHP|USD', currency):
+        return
     number = wordsToNum(words)
     if not number:
         return
     return currency + str(number)
-    
+
 def numberDelimited(number, delimiter, step):
+    """
+        Adds delimeters to a number
+
+        Args:
+            number (int): The number to delimit..
+            delimeter (string): The character used to delimit the number.
+            step (int): THe number of jumps when the delimeter will appear.
+
+        Returns:
+            string: The delimited number.
+    """
     number = re.sub("(.{" + str(step) + "})", "\\1" + delimiter, str(number)[::-1], 0, re.DOTALL)[::-1]
     if number[0] == delimiter:
         number = number[1:]
     return number
-
-print(wordsToCurrency("twelve million seven thousand eleven", "PHP"))
-print(numberDelimited("1234567890", "|", 2))
-
 
