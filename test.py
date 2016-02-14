@@ -1,65 +1,63 @@
-def numToWord(number):
-    if number == 0:
-        print("zero", end="");
-    elif number >= 1000000:
-        numToWord(int(number/1000000));
-        print("million ", end="");
-        numToWord(number%1000000);
-    elif number >= 1000:
-        numToWord(int(number/1000));
-        print("thoushand ", end="");
-        numToWord(number%1000);
-    elif number >= 100:
-        numToWord(int(number/100));
-        print("hundred ", end="");
-        numToWord(number%100);
-    elif number > 20:
-        printNumPrefix(int(number/10));
-        print("ty ", end = "");
-        numToWord(number%10);
-    elif number == 20:
-        print("twenty ", end="");
-        numToWord(number%10);
-    elif number > 12:
-        printNumPrefix(number%10);
-        print("ty ", end = "");
-    elif number == 12:
-        print("twelve ", end="");
-    elif number == 11:
-        print("eleven ", end="");
-    elif number == 10:
-        print("ten ", end="");
-    elif number == 9:
-        print("nine ", end="");
-    elif number == 8:
-        print("eight ", end="");
-    elif number == 7:
-        print("seven ", end="");
-    elif number == 6:
-        print("six ", end="");
-    elif number == 5:
-        print("five ", end="");
-    elif number == 4:
-        print("four ", end="");
-    elif number == 3:
-        print("three ", end="");
-    elif number == 2:
-        print("two ", end="");
-    elif number == 1:
-        print("one ", end="");
+import re
 
-def printNumPrefix(number):
-    if number == 9:
-        print("nine ", end="");
+def numToWords(number, accumulator = ""):
+    if number == 0:
+        return "zero "
+    elif number < 0:
+        return (numToWord(number*-1, "negative "))
+    elif number >= 1000000000:
+        return numToWord(number%1000000000, accumulator + numToWord(int(number/1000000000)) + "billion ")
+    elif number >= 1000000:
+        return numToWord(number%1000000, accumulator + numToWord(int(number/1000000)) + "million ")
+    elif number >= 1000:
+        return numToWord(number%1000, accumulator + numToWord(int(number/1000)) + "thousand ")
+    elif number >= 100:
+        return numToWord(number%100, accumulator + numToWord(int(number/100)) + "hundred ")
+    elif number > 29:
+        return numToWord(number%10, accumulator + getNumPrefix(int(number/10)) + "ty ")
+    elif number >= 20:
+        return numToWord(number%10, accumulator + "twenty ")
+    elif number > 12:
+        return accumulator+ getNumPrefix(number%10) + "teen "
+    elif number == 12:
+        return accumulator + "twelve "
+    elif number == 11:
+        return accumulator + "eleven "
+    elif number == 10:
+        return accumulator + "ten "
+    elif number == 9:
+        return accumulator + "nine "
     elif number == 8:
-        print("eight", end="");
+        return accumulator + "eight "
     elif number == 7:
-        print("seven", end="");
+        return accumulator + "seven "
     elif number == 6:
-        print("six", end="");
+        return accumulator + "six "
     elif number == 5:
-        print("fif", end="");
+        return accumulator + "five "
     elif number == 4:
-        print("four", end="");
+        return accumulator + "four "
     elif number == 3:
-        print("thir", end="");
+        return accumulator + "three "
+    elif number == 2:
+        return accumulator + "two "
+    elif number == 1:
+        return accumulator + "one "
+
+def getNumPrefix(number):
+    if number == 9:
+        return "nine"
+    elif number == 8:
+        return "eigh"
+    elif number == 7:
+        return "seven"
+    elif number == 6:
+        return "six"
+    elif number == 5:
+        return "fif"
+    elif number == 4:
+        return "four"
+    elif number == 3:
+        return "thir"
+    return ""
+
