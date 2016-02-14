@@ -22,19 +22,19 @@ def numToWordsHelper(number, accumulator = ""):
     if number == 0:
         return "zero "
     elif number < 0:
-        return (numToWord(number*-1, "negative "))
+        return (numToWordsHelper(number*-1, "negative "))
     elif number >= 1000000000:
-        return numToWord(number%1000000000, accumulator + numToWord(int(number/1000000000)) + "billion ")
+        return numToWordsHelper(number%1000000000, accumulator + numToWordsHelper(int(number/1000000000)) + "billion ")
     elif number >= 1000000:
-        return numToWord(number%1000000, accumulator + numToWord(int(number/1000000)) + "million ")
+        return numToWordsHelper(number%1000000, accumulator + numToWordsHelper(int(number/1000000)) + "million ")
     elif number >= 1000:
-        return numToWord(number%1000, accumulator + numToWord(int(number/1000)) + "thousand ")
+        return numToWordsHelper(number%1000, accumulator + numToWordsHelper(int(number/1000)) + "thousand ")
     elif number >= 100:
-        return numToWord(number%100, accumulator + numToWord(int(number/100)) + "hundred ")
+        return numToWordsHelper(number%100, accumulator + numToWordsHelper(int(number/100)) + "hundred ")
     elif number > 29:
-        return numToWord(number%10, accumulator + getNumPrefix(int(number/10)) + "ty ")
+        return numToWordsHelper(number%10, accumulator + getNumPrefix(int(number/10)) + "ty ")
     elif number >= 20:
-        return numToWord(number%10, accumulator + "twenty ")
+        return numToWordsHelper(number%10, accumulator + "twenty ")
     elif number > 12:
         return accumulator+ getNumPrefix(number%10) + "teen "
     elif number == 12:
