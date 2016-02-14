@@ -126,6 +126,8 @@ def wordsToNum(numberWord):
             else:
                 holder += prefix * 10
             continue
+        else:
+            return
         number += holder
         holder = 0
 
@@ -147,5 +149,3 @@ def getNumPrefixValue(word):
     elif word == "thir":
         return 3
 
-
-print(wordsToNum("twelve million seven thousand eleven"))
