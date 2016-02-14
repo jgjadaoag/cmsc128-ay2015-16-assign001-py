@@ -61,3 +61,91 @@ def getNumPrefix(number):
         return "thir"
     return ""
 
+def wordsToNum(numberWord):
+    numberWord = numberWord.lower()
+    words = re.split("\W+", numberWord); 
+    holder = 0
+    number = 0
+    for word in words:
+        if word == "":
+            continue
+        elif word == "zero" and len(words) == 3: #ensure zero is the only word
+            return 0
+        elif word == "one":
+            holder += 1
+            continue
+        elif word == "two":
+            holder += 2
+            continue
+        elif word == "three":
+            holder += 3
+            continue
+        elif word == "four":
+            holder += 4
+            continue
+        elif word == "five":
+            holder += 5
+            continue
+        elif word == "six":
+            holder += 6
+            continue
+        elif word == "seven":
+            holder += 7
+            continue
+        elif word == "eight":
+            holder += 8
+            continue
+        elif word == "nine":
+            holder += 9
+            continue
+        elif word == "ten":
+            holder += 10
+            continue
+        elif word == "hundred":
+            holder *= 100
+            continue
+        elif word == "thousand":
+            holder *= 1000
+        elif word == "million":
+            holder *= 1000000
+        elif word == "eleven":
+            holder += 11
+            continue
+        elif word == "twelve":
+            holder += 12
+            continue
+        elif word == "twenty":
+            holder += 20
+            continue
+        elif re.match(".*(ty|teen)", word):
+            prefix = getNumPrefixValue(re.match(".*(?=ty|teen)", word).group(0))
+            if not prefix:
+                return
+            if word[-1] == "n":
+                holder += prefix + 10
+            else:
+                holder += prefix * 10
+            continue
+        number += holder
+        holder = 0
+
+    return number+holder
+
+def getNumPrefixValue(word):
+    if word == "nine":
+        return 9
+    elif word == "eigh":
+        return 8
+    elif word == "seven":
+        return 7
+    elif word == "six":
+        return 6
+    elif word == "fif":
+        return 5
+    elif word == "four":
+        return 4
+    elif word == "thir":
+        return 3
+
+
+print(wordsToNum("twelve million seven thousand eleven"))
