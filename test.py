@@ -149,3 +149,19 @@ def getNumPrefixValue(word):
     elif word == "thir":
         return 3
 
+def wordsToCurrency(words, currency):
+    number = wordsToNum(words)
+    if not number:
+        return
+    return currency + str(number)
+    
+def numberDelimited(number, delimiter, step):
+    number = re.sub("(.{" + str(step) + "})", "\\1" + delimiter, str(number)[::-1], 0, re.DOTALL)[::-1]
+    if number[0] == delimiter:
+        number = number[1:]
+    return number
+
+print(wordsToCurrency("twelve million seven thousand eleven", "PHP"))
+print(numberDelimited("1234567890", "|", 2))
+
+
